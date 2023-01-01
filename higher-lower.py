@@ -8,54 +8,60 @@ print(logo)
 CORRECT = 1
 WRONG = 0
 
+# a = data[0]
+# b = data[0]
 
-
-def to_compare():
-    a = data[r.randint(0, 49)]
-    b = data[r.randint(0,49)]
+def to_compare(a, b):
+    while a == b:
+        b = data[r.randint(0,49)]
 
     print(f"Compare A: {a.get('name')}, a {a.get('description')}, from {a.get('country')}.")
     print(vs)
     print(f"Against B: {b.get('name')}, a {b.get('description')}, from {b.get('country')}.")
+    print(f"{a.get('name')}: {a.get('follower_count')}")
+    print(f"{b.get('name')}: {b.get('follower_count')}")
 
-    ANSWER = input("Who has more followers? Type 'A' or 'B': ")
+    answer = (input("Who has more followers? Type 'A' or 'B': ")).lower()
 
-    if ANSWER == 'A' or ANSWER == 'a':
-        if a.get("follower_count") > b.get("follower_count"):
-            print("Correct!")
-            return CORRECT
-        elif a.get("follower_count") == b.get("follower_count"):
-            print("Correct!")
-            return CORRECT
+    def check(answer):
+        if answer == 'A' or answer == 'a':
+            if a.get("follower_count") > b.get("follower_count"):
+                print("Correct!")
+                return CORRECT
+            elif a.get("follower_count") == b.get("follower_count"):
+                print("Correct!")
+                return CORRECT
+            else:
+                print("Wrong!")
+                return WRONG
+
+        elif answer == 'b' :
+            if b.get("follower_count")> a.get("follower_count"):
+                print("Correct!")
+                return CORRECT
+            elif b.get("follower_count") == a.get("follower_count"):
+                print("Correct!")
+                return CORRECT
+            else:
+                print("Wrong!")
+                return WRONG
         else:
-            print("Wrong!")
+            print("Not valid.")
             return WRONG
-
-    elif ANSWER == 'B' or ANSWER == 'b' :
-        if b.get("follower_count")> a.get("follower_count"):
-            print("Correct!")
-            return CORRECT
-        elif b.get("follower_count") == a.get("follower_count"):
-            print("Correct!")
-            return CORRECT
-        else:
-            print("Wrong!")
-            return WRONG
-    else:
-        print("Not valid.")
-        return WRONG
+            
+    return check(answer)
 
 def increase():
     score = 0
     if 1 == 1:
         while score >= 0:
             print(f"Your score: {score}\n")
-            x = to_compare()  #1 or 0
+            x = to_compare(a = data[r.randint(0, 49)], b = data[r.randint(0,49)])  #1 or 0
             if x == 0:
                 print(f"Game Over!! Your final score is {score}")
                 break
             else:
-                score+=x
+                score+=x              
                 continue
-          
+
 increase()
