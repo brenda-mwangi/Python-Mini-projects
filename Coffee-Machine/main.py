@@ -39,8 +39,8 @@ def get_resources():
     key_list2 = list(resources.keys())[list(resources.values()).index(remaining_resources[2])]
  
 
-    if remaining_resources[0]> needed_resources[0]:
-        if remaining_resources[1]> needed_resources[1]:
+    if remaining_resources[0]>= needed_resources[0]:
+        if remaining_resources[1]>= needed_resources[1]:
             if remaining_resources[2]> needed_resources[2]:
                 x = f"Here is your {coffee}☕. Have a good day! \n"
                 return print(x)
@@ -50,39 +50,6 @@ def get_resources():
             else:
                 x=f"There is no enough {key_list2}\n"
                 return print(x)
-
-        elif remaining_resources[1] == needed_resources[1]:
-            if remaining_resources[2]> needed_resources[2]:
-                x = f"Here is your {coffee}☕. Have a good day! \n"
-                return print(x)
-            elif remaining_resources[2]== needed_resources[2]:
-                x = f"Here is your {coffee}☕. Have a good day! \n"
-                return print(x)
-            else:
-                x=f"There is no enough {key_list2}\n"
-                return print(x)
-
-        elif remaining_resources[0] == needed_resources[0]:
-            if remaining_resources[1]> needed_resources[1]:
-                if remaining_resources[2]> needed_resources[2]:
-                    x = f"Here is your {coffee}☕. Have a good! day \n"
-                    return print(x)
-                elif remaining_resources[2]== needed_resources[2]:
-                    x = f"Here is your {coffee}☕. Have a good! day \n"
-                    return print(x)
-                else:
-                    x=f"There is no enough {key_list2}\n"
-                    return print(x)
-            elif remaining_resources[1] == needed_resources[1]:
-                if remaining_resources[2]> needed_resources[2]:
-                    x = f"Here is your {coffee}☕. Have a good! day \n"
-                    return print(x)
-                elif remaining_resources[2]== needed_resources[2]:
-                    x = f"Here is your {coffee}☕. Have a good! day \n"
-                    return print(x)
-                else:
-                    x=f"There is no enough {key_list2}\n"
-                    return print(x)
         else:
                 x=f"There is no enough {key_list1}\n"
                 return print(x)
@@ -95,3 +62,4 @@ def get_menu():
     coffee_type = MENU[coffee]['ingredients']
     for i in coffee_type:
         print(f"{i.capitalize()}: {coffee_type[i]}")
+
