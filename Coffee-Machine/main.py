@@ -2,6 +2,7 @@ from menu import MENU
 from menu import resources
 from replit import clear
 from art import logo
+import numpy as np
 
 # 1. Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
 def money_transact(coffee):
@@ -28,7 +29,21 @@ def money_transact(coffee):
 
         resources['money']+= needed_money
         return 1
+def deduct_resources(coffee):
+    coffee_type = MENU[coffee]['ingredients']
 
+    needed_resources = [coffee_type['water'], coffee_type['milk'], coffee_type['coffee'], ]
+
+    remaining_resources= [resources['water'], resources['milk'], resources['coffee']]
+    
+    x = np.array(remaining_resources)-np.array(needed_resources)
+    cash = resources['money'] + MENU[coffee]['cost']
+
+    resources['water'] = x[0]
+    resources['milk'] = x[1]
+    resources['coffee'] = x[2]
+    resources['money'] = cash
+ 
 def get_resources(coffee):
     coffee_type = MENU[coffee]['ingredients']
     needed_resources = [coffee_type['water'], coffee_type['milk'], coffee_type['coffee'], MENU[coffee]['cost']]
@@ -59,11 +74,6 @@ def get_resources(coffee):
         x = f"There is no {key_list}\n"
         return print(x)
 
-def deduct_resources():
-    coffee = 'cappuccino'
-    coffee_type = MENU[coffee]['ingredients']
-    for i in coffee_type:
-        print(f"{i.capitalize()}: {coffee_type[i]}")
 
 
 def machine():
@@ -76,6 +86,7 @@ def machine():
 
             if coffee == 'espresso' or coffee == 'latte' or coffee == 'cappuccino':
                 get_resources(coffee)
+                deduct_resources(coffee)
                 counter-=1
                 continue
 
@@ -84,13 +95,13 @@ def machine():
                     print(f"{i.capitalize()}: {resources[i]}")
                 counter-=1
                 continue
-                
             elif coffee == "off":
                 print("Shutting Down.....")
                 break
 
             else:
                 print("Not Available")
-                break
+                continue
 
-machine()        
+machine() 
+# deduct_resources('latte')       
