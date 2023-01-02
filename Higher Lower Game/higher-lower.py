@@ -1,15 +1,10 @@
 from art import logo, vs
 from game_data import data
 import random as r
-print(logo)
-
-
+from replit import clear
 
 CORRECT = 1
 WRONG = 0
-
-# a = data[0]
-# b = data[0]
 
 def to_compare(a, b):
     while a == b:
@@ -26,24 +21,18 @@ def to_compare(a, b):
     def check(answer):
         if answer == 'A' or answer == 'a':
             if a.get("follower_count") > b.get("follower_count"):
-                print("Correct!")
                 return CORRECT
             elif a.get("follower_count") == b.get("follower_count"):
-                print("Correct!")
                 return CORRECT
             else:
-                print("Wrong!")
                 return WRONG
 
         elif answer == 'b' :
             if b.get("follower_count")> a.get("follower_count"):
-                print("Correct!")
                 return CORRECT
             elif b.get("follower_count") == a.get("follower_count"):
-                print("Correct!")
                 return CORRECT
             else:
-                print("Wrong!")
                 return WRONG
         else:
             print("Not valid.")
@@ -55,13 +44,16 @@ def increase():
     score = 0
     if 1 == 1:
         while score >= 0:
+            clear()
+            print(logo)
             print(f"Your score: {score}\n")
             x = to_compare(a = data[r.randint(0, 49)], b = data[r.randint(0,49)])  #1 or 0
             if x == 0:
                 print(f"Game Over!! Your final score is {score}")
                 break
             else:
-                score+=x              
+                score+=x 
+                print("Correct!")
                 continue
 
 increase()
