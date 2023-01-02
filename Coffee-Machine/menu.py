@@ -2,6 +2,7 @@ MENU = {
     "espresso": {
         "ingredients": {
             "water": 50,
+            "milk": 0,
             "coffee": 18,
         },
         "cost": 1.5,
@@ -10,15 +11,15 @@ MENU = {
         "ingredients": {
             "water": 200,
             "milk": 150,
-            "coffee": 24,
+            "coffee": 25,
         },
-        "cost": 2.5,
+        "cost": 2.5
     },
     "cappuccino": {
         "ingredients": {
             "water": 250,
             "milk": 100,
-            "coffee": 24,
+            "coffee": 25,
         },
         "cost": 3.0,
     }
