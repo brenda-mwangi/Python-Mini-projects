@@ -43,7 +43,8 @@ def deduct_resources(coffee):
     resources['milk'] = x[1]
     resources['coffee'] = x[2]
     resources['money'] = cash
- 
+    return resources
+
 def get_resources(coffee):
     coffee_type = MENU[coffee]['ingredients']
     needed_resources = [coffee_type['water'], coffee_type['milk'], coffee_type['coffee'], MENU[coffee]['cost']]
@@ -59,6 +60,7 @@ def get_resources(coffee):
         if remaining_resources[1]>= needed_resources[1]:
             if remaining_resources[2]>= needed_resources[2]:
                 if money_transact(coffee)==1:
+                    deduct_resources(coffee)
                     x = f"Here is your {coffee}☕. Have a good day! \n"
                     return print(x)
                 else:
@@ -86,14 +88,11 @@ def machine():
 
             if coffee == 'espresso' or coffee == 'latte' or coffee == 'cappuccino':
                 get_resources(coffee)
-                deduct_resources(coffee)
-                counter-=1
                 continue
 
             elif coffee == 'report':
                 for i in resources:
                     print(f"{i.capitalize()}: {resources[i]}")
-                counter-=1
                 continue
             elif coffee == "off":
                 print("Shutting Down.....")
