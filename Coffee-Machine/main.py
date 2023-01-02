@@ -1,6 +1,7 @@
 from menu import MENU
 from menu import resources
-
+from replit import clear
+from art import logo
 
 # 1. Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
 def money_transact(coffee):
@@ -15,7 +16,6 @@ def money_transact(coffee):
     needed_money = MENU[coffee]['cost']
 
     if total_money_given < needed_money:
-        print("Sorry that's not enough money. Money refunded.")
         return 0
 
     elif total_money_given == needed_money:
@@ -30,13 +30,10 @@ def money_transact(coffee):
         return 1
 
 def get_resources(coffee):
-    # coffee = 'latte'
-    
     coffee_type = MENU[coffee]['ingredients']
     needed_resources = [coffee_type['water'], coffee_type['milk'], coffee_type['coffee'], MENU[coffee]['cost']]
 
     remaining_resources= [resources['water'], resources['milk'], resources['coffee'], resources['money']]
- 
    
     key_list = list(resources.keys())[list(resources.values()).index(remaining_resources[0])]
     key_list1 = list(resources.keys())[list(resources.values()).index(remaining_resources[1])]
@@ -45,55 +42,55 @@ def get_resources(coffee):
 
     if remaining_resources[0]>= needed_resources[0]:
         if remaining_resources[1]>= needed_resources[1]:
-            if remaining_resources[2]> needed_resources[2]:
+            if remaining_resources[2]>= needed_resources[2]:
                 if money_transact(coffee)==1:
                     x = f"Here is your {coffee}☕. Have a good day! \n"
                     return print(x)
-            elif remaining_resources[2]== needed_resources[2]:
-                if money_transact(coffee)==1:
-                    x = f"Here is your {coffee}☕. Have a good day! \n"
+                else:
+                    x = "Sorry that's not enough money. Money refunded.\n"
                     return print(x)
             else:
-                if money_transact(coffee)==0:
-                    x=f"There is no enough {key_list2}\n"
-                    return print(x)
-        else:
-            if money_transact(coffee)==0:
-                x=f"There is no enough {key_list1}\n"
+                x = f"There is no {key_list2}\n"
                 return print(x)
-    else:
-        if money_transact(coffee)==0:
-            x=f"There is no enough {key_list}\n"
+        else:
+            x = f"There is no {key_list1}\n"
             return print(x)
+    else:
+        x = f"There is no {key_list}\n"
+        return print(x)
 
-def get_menu():
+def deduct_resources():
     coffee = 'cappuccino'
     coffee_type = MENU[coffee]['ingredients']
     for i in coffee_type:
         print(f"{i.capitalize()}: {coffee_type[i]}")
 
 
-
 def machine():
-    coffee = input("What would you like? (espresso/latte/cappuccino): ")
+    if 1 == 1:
+        counter = 12
+        while counter>=1:
+            # clear()
+            print(logo)
+            coffee = input("What would you like? (espresso/latte/cappuccino): ")
 
-    if coffee == 'espresso' or coffee == 'latte' or coffee == 'cappuccino':
-        "Turn off the Coffee Machine by entering “off” to the prompt."
-        get_resources(coffee)
+            if coffee == 'espresso' or coffee == 'latte' or coffee == 'cappuccino':
+                get_resources(coffee)
+                counter-=1
+                continue
 
-    elif coffee == 'report':
-        def resource():
-            """Returns resources available"""
-            for i in resources:
-                print(f"{i.capitalize()}: {resources[i]}")
-        return resource()
+            elif coffee == 'report':
+                for i in resources:
+                    print(f"{i.capitalize()}: {resources[i]}")
+                counter-=1
+                continue
+                
+            elif coffee == "off":
+                print("Shutting Down.....")
+                break
 
-# 2. Turn off the Coffee Machine by entering “off” to the prompt.
-    elif coffee == "off":
-        print("Shutting Down.....")
-        exit()
-
-    else:
-        print("Not Available")
+            else:
+                print("Not Available")
+                break
 
 machine()        
