@@ -20,6 +20,7 @@ def money_transact(coffee):
         return 0
 
     elif total_money_given == needed_money:
+        print(f"Money received.")  
         return 1
 
     else:
