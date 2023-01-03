@@ -20,36 +20,34 @@ def money_transact(coffee):
         return 0
 
     elif total_money_given == needed_money:
-        resources['money']+= needed_money
         return 1
 
     else:
         change = round(total_money_given - needed_money, 2)
         print(f"Here is ${change} in change.")  
-
-        resources['money']+= needed_money
         return 1
+
 def deduct_resources(coffee):
     coffee_type = MENU[coffee]['ingredients']
 
     needed_resources = [coffee_type['water'], coffee_type['milk'], coffee_type['coffee'], ]
 
     remaining_resources= [resources['water'], resources['milk'], resources['coffee']]
-    
+    profit = 4
     x = np.array(remaining_resources)-np.array(needed_resources)
-    cash = resources['money'] + MENU[coffee]['cost']
+    
 
     resources['water'] = x[0]
     resources['milk'] = x[1]
     resources['coffee'] = x[2]
-    resources['money'] = cash
     return resources
+
 
 def get_resources(coffee):
     coffee_type = MENU[coffee]['ingredients']
     needed_resources = [coffee_type['water'], coffee_type['milk'], coffee_type['coffee'], MENU[coffee]['cost']]
 
-    remaining_resources= [resources['water'], resources['milk'], resources['coffee'], resources['money']]
+    remaining_resources= [resources['water'], resources['milk'], resources['coffee']]
    
     key_list = list(resources.keys())[list(resources.values()).index(remaining_resources[0])]
     key_list1 = list(resources.keys())[list(resources.values()).index(remaining_resources[1])]
@@ -60,8 +58,8 @@ def get_resources(coffee):
         if remaining_resources[1]>= needed_resources[1]:
             if remaining_resources[2]>= needed_resources[2]:
                 if money_transact(coffee)==1:
-                    deduct_resources(coffee)
                     x = f"Here is your {coffee}☕. Have a good day! \n"
+                    deduct_resources(coffee)
                     return print(x)
                 else:
                     x = "Sorry that's not enough money. Money refunded.\n"
@@ -81,18 +79,23 @@ def get_resources(coffee):
 def machine():
     if 1 == 1:
         counter = 12
+        profit = 0
+
         while counter>=1:
-            # clear()
             print(logo)
             coffee = input("What would you like? (espresso/latte/cappuccino): ")
 
             if coffee == 'espresso' or coffee == 'latte' or coffee == 'cappuccino':
                 get_resources(coffee)
+                cash = MENU[coffee]['cost']
+                profit += cash
                 continue
 
             elif coffee == 'report':
-                for i in resources:
-                    print(f"{i.capitalize()}: {resources[i]}")
+                print(f"Water: {resources['water']}ml")
+                print(f"Milk: {resources['milk']}ml")
+                print(f"Coffee: {resources['coffee']}g")
+                print(f"Money: ${profit}")
                 continue
             elif coffee == "off":
                 print("Shutting Down.....")
@@ -103,4 +106,5 @@ def machine():
                 continue
 
 machine() 
-# deduct_resources('latte')       
+
+# TODO 1: Create an add resources functionality
