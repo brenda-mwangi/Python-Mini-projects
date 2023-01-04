@@ -1,6 +1,5 @@
 from menu import MENU
 from menu import resources
-from replit import clear
 from art import logo
 import numpy as np
 
