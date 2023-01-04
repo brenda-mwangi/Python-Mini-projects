@@ -4,8 +4,11 @@ class Question:
         self.question = question
         self.answer = answer
         
-question = data[0]["text"]
-answer = data[0]['answer']
+question_bank = []
+for question in data:
+    question_text=question['text']
+    question_answer=question['answer']
+    new_quest = Question(question_text,question_answer)
+    question_bank.append(new_quest)
 
-quiz1 = Question(question,answer)        
-print(quiz1.question)
+print(question_bank)
