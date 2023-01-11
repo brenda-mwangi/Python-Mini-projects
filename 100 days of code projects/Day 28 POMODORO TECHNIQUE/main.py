@@ -9,17 +9,20 @@ WORK_MIN = 5
 SHORT_BREAK_MIN = 2
 LONG_BREAK_MIN = 3
 reps = 0
-check = "✔"
 time = None
+
 # ---------------------------- TIMER RESET ------------------------------- # 
 def reset():
     window.after_cancel(time)
-    canvas.itemconfig(timer_text, text="00:00", fill= "white", font=(FONT_NAME, 30, "bold"))
-    timer.config(text="Timer", font=("Courier", 50), fg=GREEN, bg=YELLOW, padx=10, pady=10)
+    canvas.itemconfig(timer_text, text="00:00")
+    timer.config(text="Timer",font=("Courier", 50), fg=GREEN)
+    tick.config(text="")
+    global reps
+    reps = 0
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
-    global reps, check
+    global reps
     reps+=1
     if reps %8 == 0:
         countdown(int(LONG_BREAK_MIN))
@@ -34,12 +37,8 @@ def start_timer():
     else:
         countdown(int(WORK_MIN))
         timer.config(text="WORK",fg=GREEN)
-    if reps %2 == 0:
-        tick.config(text = check)
-        check += "✔"
 
-
-
+        
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
@@ -61,6 +60,11 @@ def countdown(count):
         time = window.after(1000,countdown, count-1)
     else:
         start_timer()
+        marks = ""
+        work_session = floor(reps/2)
+        for i in range(work_session):
+            marks += "✔"
+            tick.config(text=marks)
         
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -85,7 +89,7 @@ start.grid(row=2,column=0)
 resetter = Button(text="Reset", command=reset)
 resetter.grid(row=2,column=2)
 
-tick = Label(text="", font=("Courier"), fg=GREEN, bg=YELLOW)
+tick = Label(font=("Courier"), fg=GREEN, bg=YELLOW)
 tick.grid(row=3,column=1)
 
 
