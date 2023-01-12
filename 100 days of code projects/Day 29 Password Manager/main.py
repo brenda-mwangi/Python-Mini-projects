@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate():
     #Password Generator Project
@@ -31,15 +32,36 @@ def save():
     web = website.get()
     em = email.get()
     pw = password_entry.get()
+    new_data = {
+            web:{
+                "email": em,
+                "password": pw,
+            },
+        }
     if len(pw) >0 and len(em)>0 and len(web)>0:
-    
-        is_ok=messagebox.askokcancel(title=web, message=f"These are the details entered:\nEmail:{em}\nPassword: {pw}\nIs it okay to save?")
-        
-        if is_ok:
-            with open("data.txt", mode="a") as data:
-                data.write(f"{web} | {em} | {pw}\n")
-                website.delete(0, END)
-                password_entry.delete(0, END)
+
+        with open("data.json", mode="r") as data:
+            #write -  json.dump(new_data, data, indent=4)
+           #read -  print(json.load(data))
+            # save = json.dump(updated data, data file, indents)
+
+           #updating json
+        # read data
+            try:
+                existing_data = json.load(data)
+        # update data
+                existing_data.update(new_data)
+            except:
+                with open("data.json", mode="w") as data:
+                    json.dump(new_data,data, indent=4)
+                    website.delete(0, END)
+                    password_entry.delete(0, END)
+            else:
+                with open("data.json", mode="w") as data:
+                # save updated data
+                    json.dump(existing_data,data, indent=4)
+                    website.delete(0, END)
+                    password_entry.delete(0, END)
     else:
         messagebox.showinfo(title=web,message="Don't leave empty spaces")
 
