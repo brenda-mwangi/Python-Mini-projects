@@ -39,14 +39,7 @@ def save():
             },
         }
     if len(pw) >0 and len(em)>0 and len(web)>0:
-
         with open("data.json", mode="r") as data:
-            #write -  json.dump(new_data, data, indent=4)
-           #read -  print(json.load(data))
-            # save = json.dump(updated data, data file, indents)
-
-           #updating json
-        # read data
             try:
                 existing_data = json.load(data)
         # update data
@@ -54,16 +47,34 @@ def save():
             except:
                 with open("data.json", mode="w") as data:
                     json.dump(new_data,data, indent=4)
-                    website.delete(0, END)
-                    password_entry.delete(0, END)
+
             else:
                 with open("data.json", mode="w") as data:
                 # save updated data
                     json.dump(existing_data,data, indent=4)
-                    website.delete(0, END)
-                    password_entry.delete(0, END)
+            finally:
+                website.delete(0, END)
+                password_entry.delete(0, END)
+            messagebox.showinfo(title=web, message="Password added successfully")
+
     else:
         messagebox.showinfo(title=web,message="Don't leave empty spaces")
+# ---------------------------- SEARCH PASSWORDS ------------------------------- #
+def search_password():
+    check_website = website.get()
+    if len(check_website)>0:
+        with open("data.json", "r") as file:
+            try:
+                cd = json.load(file)
+                messagebox.showinfo(title = check_website, message = f"Email: {cd[check_website]['email']}\nPassword: {cd[check_website]['password']}")
+                pyperclip.copy(cd[check_website]['password'])
+
+            except KeyError:
+                messagebox.showerror(title = check_website, message = f"No Data Found")
+    else:
+        messagebox.showerror(title = check_website, message = f"Website Empty!")
+                  
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -75,17 +86,20 @@ lock_img = PhotoImage(file="logo.png")
 canvas.create_image(100,100,image = lock_img)
 canvas.grid(column=1,row=0)
 
-website_label = Label(text="Website:")
+website_label = Label(text="Website: ")
 website_label.grid(column=0,row=1)
 
-website = Entry(width=50)
+website = Entry(width=31)
 website.focus()
-website.grid(column=1,row=1, columnspan=2)
+website.grid(column=1,row=1)
+
+search_button = Button(text="Search", padx=25, command=search_password)
+search_button.grid(row=1, column=2)
 
 email_label = Label(text="Email/Username:")
 email_label.grid(column=0,row=2)
 
-email = Entry(width=50)
+email = Entry(width=49)
 email.insert(0,"bresh@gmail.com")
 email.grid(column=1,row=2,columnspan=2)
 
@@ -95,10 +109,10 @@ password_label.grid(column=0,row=3)
 password_entry = Entry(width= 31)
 password_entry.grid(column=1, row=3)
 
-generate_password = Button(text="Generate Password", width=15, command=generate)
+generate_password = Button(text="Generate Password", width=14, command=generate)
 generate_password.grid(column=2,row=3)
 
-add_password = Button(text="Add", width=43,command=save)
+add_password = Button(text="Add", width=41,command=save)
 add_password.grid(column=1,row=4,columnspan=2)
 
 
