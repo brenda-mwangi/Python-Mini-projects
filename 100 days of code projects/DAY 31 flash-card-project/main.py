@@ -4,15 +4,21 @@ import random
 BACKGROUND_COLOR = "#B1DDC6"
 #****************************************DATA READING******************************************#
 import pandas as pd
-data= pd.read_csv("data/french_words.csv")
-translations = data.to_dict(orient="records")
-current_card = {}
+try:
+    data= pd.read_csv("data/words_to_learn.csv")
+
+except FileNotFoundError:
+    data = pd.read_csv("data/french_words.csv")
+    translations = data.to_dict(orient="records")
+
+else:
+    translations = data.to_dict(orient="records")
 
 #**************************************RIGHT BUTTON********************************************#
 def is_known():
     translations.remove(current_card)
     data = pd.DataFrame(translations)
-    data.to_csv('data/unknown.csv')
+    data.to_csv('data/words_to_learn.csv',index=False)
     generate_word()
 #**************************************WRONG BUTTON********************************************#
 def generate_word():
