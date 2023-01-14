@@ -10,7 +10,10 @@ current_card = {}
 
 #**************************************RIGHT BUTTON********************************************#
 def is_known():
-    translations
+    translations.remove(current_card)
+    data = pd.DataFrame(translations)
+    data.to_csv('data/unknown.csv')
+    generate_word()
 #**************************************WRONG BUTTON********************************************#
 def generate_word():
     global current_card, flip_timer
