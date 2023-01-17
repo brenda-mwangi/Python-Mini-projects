@@ -3,6 +3,7 @@ import datetime as dt
 import random
 from app_password import app16
 
+# create the datetime object
 time = dt.datetime.now()
 today = time.weekday()
 
