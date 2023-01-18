@@ -6,4 +6,7 @@ response = requests.get(url="http://api.open-notify.org/iss-now.json")
 # print(response)
 
 # returns a response code "200"
-print(response.status_code)
+# print(response.status_code)
+
+if response.status_code !=200:
+    raise Exception("Bad =")
