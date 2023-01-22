@@ -20,6 +20,7 @@ parameters = {
     "formatted": 0,
 }
 
+#responses
 response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
 response.raise_for_status()
 data = response.json()
