@@ -1,5 +1,3 @@
-# SPEED UP
-# THICKNESS
 from turtle import *
 import random
 
