@@ -3,7 +3,10 @@ import requests
 
 
 response = requests.get("https://news.ycombinator.com/news")
-print(response.text)
+# print(response.text)
+yc_webpage = response.text
 
-with open("news.html", 'w') as file:
-    file.write(response.text)
+soup = BeautifulSoup(yc_webpage, "html.parser")
+
+anchor = soup.find(name="span", class_="titleline")
+print(anchor)
