@@ -8,5 +8,5 @@ yc_webpage = response.text
 
 soup = BeautifulSoup(yc_webpage, "html.parser")
 
-anchor = soup.find(name="span", class_="titleline")
+anchor = soup.find_all(name="span", class_="titleline")
 print(anchor)
