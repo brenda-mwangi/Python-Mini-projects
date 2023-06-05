@@ -18,7 +18,7 @@ def calculate(calc_function, n1, n2):
     return calc_function(n1, n2)
 
 result = calculate(add, 2, 3)
-print(result)
+# print(result)
 
 #Functions can be nested in other functions
 
@@ -30,7 +30,7 @@ def outer_function():
 
     nested_function()
 
-outer_function()
+# outer_function()
 
 # Functions can be returned from other functions
 def outer_function():
@@ -41,8 +41,8 @@ def outer_function():
 
     return nested_function
 
-inner_function = outer_function()
-inner_function
+# inner_function = outer_function()
+# inner_function
 
 
 # Simple Python Decorator Functions
@@ -70,5 +70,5 @@ def say_bye():
 def say_greeting():
     print("How are you?")
 decorated_function = delay_decorator(say_greeting)
-decorated_function()
+decorated_function
 
