@@ -29,9 +29,9 @@ def hello_world():
 def say_bye():
     return "Bye"
 
-@app.route("/username/<name>/<int:number>")
-def greet(name, number):
-    return f"Hello {name}, you're {number} years!"
+@app.route("/username/<name>/<int:age>")
+def greet(name, age):
+    return f"Hello {name}, you're {age} years!"
 
 
 if __name__ == "__main__":
