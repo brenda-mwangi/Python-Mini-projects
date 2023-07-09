@@ -2,11 +2,12 @@ from bs4 import BeautifulSoup
 import requests
 
 
-response = requests.get("https://news.ycombinator.com/news")
-# print(response.text)
-yc_webpage = response.text
+response = requests.get("https://podfoods.co/")
 
-soup = BeautifulSoup(yc_webpage, "html.parser")
+# Parse HTML Code
+soup = BeautifulSoup(response.content, 'html.parser')
+yc_webpage = soup.prettify()
 
-anchor = soup.find_all(name="span", class_="titleline")
-print(anchor)
+with open("food.html", "w") as food:
+    food.write(yc_webpage)
+
