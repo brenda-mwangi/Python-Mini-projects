@@ -29,22 +29,16 @@ def guess(name):
 def get_blogs():
     url = "https://api.npoint.io/4152611fd8cc3f8b70c5"
     response = requests.get(url)
-    data = response.json()
+    data = response.json()[1:]
     return render_template("blogs.html", data=data)
 
-# @app.route("/blogs/<int:num>")
-# def get_individual_blog(num):
-#     url = "https://api.npoint.io/4152611fd8cc3f8b70c5"
-#     one_data = requests.get(url).json()[num]
-#     return render_template("oneBlog.html", data=one_data)
 
 @app.route("/blogs/<int:num>")
 def get_individual_blog(num):
     url = "https://api.npoint.io/4152611fd8cc3f8b70c5"
     data = requests.get(url).json()
-    one_data = data[num]
-    blog_id = one_data['id']  # extract the blog ID
-    return render_template("oneBlog.html", data=one_data)
+    print(data[num])
+    return render_template("oneBlog.html", data=data[num])
 
 if __name__ == "__main__":
     app.run(debug=True)
