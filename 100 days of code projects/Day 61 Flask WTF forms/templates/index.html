@@ -1,17 +1,97 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Secrets</title>
-  </head>
-  <body>
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Welcome</h1>
-        <p>Are you ready to discover my secret?</p>
-        <a class="btn btn-primary btn-lg" href=" {{ url_for('login') }} "
-          >Login</a
-        >
-      </div>
-    </div>
-  </body>
+
+<head>
+  <title>Discover My Secret</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 50px;
+      text-align: center;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 20px;
+      margin-bottom: 50px;
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #0062cc;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #0056b3;
+    }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        padding: 30px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      p {
+        font-size: 18px;
+      }
+
+      button {
+        font-size: 18px;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Welcome</h1>
+    <p>Are you ready to discover my secret?</p>
+    <button onclick="location.href='/login'"><i class="fas fa-lock"></i> Login</button>
+    <!-- <p>Don't have an account yet? <a href="/signup">Sign up</a> now!</p> -->
+  </div>
+</body>
+
 </html>

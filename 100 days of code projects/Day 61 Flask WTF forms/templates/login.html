@@ -3,11 +3,38 @@
 <html>
 	<head>
 		<title>Login</title>
+		<link rel="stylesheet" href="../static/css/login.css">
 	</head>
 	<body>
-        <div class="container">
-		<h1>Login</h1>
-        <!-- This is where our form will go. -->
-        </div>
+	<div class="login-box">
+		<h2>Login</h2>
+		<form action="{{ url_for('login') }}" method="post" novalidate>
+			{{ form.csrf_token }}
+
+			<div class="user-box">
+				{{ form.email(size=30) }}
+				{{ form.email.label }}
+				{% for err in form.email.errors %}
+					<span style="color:red">{{ err }}<span>
+				{% endfor %}
+			</div>
+
+			<div class="user-box">
+				{{ form.password(size=30) }}
+				{{ form.password.label }}
+				{% for err in form.password.errors %}
+					<span style="color:red">{{ err }}<span>
+				{% endfor %}
+			</div>
+			<div class="submit_section">
+				{{ form.submit }}
+			</div>
+		</form>
+	</div>
+	<script>
+		window.addEventListener('load', function () {
+				document.querySelector('.login-box').classList.add('loaded');
+			});
+	</script>
 	</body>
 </html>
