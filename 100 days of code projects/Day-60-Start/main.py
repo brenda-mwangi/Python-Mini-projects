@@ -1,22 +1,23 @@
 from flask import Flask, render_template, request
 import requests
 import smtplib
-from app_pass import app, my_email
-
+from app_pass import emailpass, my_email
+from datetime import datetime
 # USE YOUR OWN npoint LINK! ADD AN IMAGE URL FOR YOUR POST. 👇
 posts = requests.get("https://api.npoint.io/4152611fd8cc3f8b70c5").json()[1:]
 
 app = Flask(__name__)
 
+year = datetime.now().year
 
 @app.route('/')
 def get_all_posts():
-    return render_template("index.html", all_posts=posts)
+    return render_template("index.html", all_posts=posts, current_year= year)
 
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about.html", current_year= year)
 
 
 @app.route("/post/<int:index>")
@@ -25,7 +26,7 @@ def show_post(index):
     for blog_post in posts:
         if blog_post["id"] == index:
             requested_post = blog_post
-    return render_template("post.html", post=requested_post)
+    return render_template("post.html", post=requested_post, current_year= year)
 
 
 @app.route("/contact", methods=['get', "post"])
@@ -45,7 +46,7 @@ def contact():
             connection=smtplib.SMTP("smtp.gmail.com", 587)
             connection.starttls()
             connection.ehlo()
-            connection.login(user= str(my_email), password=str(app))
+            connection.login(user= my_email, password=emailpass)
             connection.sendmail(from_addr=my_email, to_addrs=email, msg=mail)
             connection.close()
             print("Email sent successfully!")
@@ -56,7 +57,7 @@ def contact():
 
         return render_template("contact.html", email=email, message=message, phone=phone, method_used=request.method, success= "Successfully Sent")
     else:
-        return render_template("contact.html")
+        return render_template("contact.html", current_year= year)
 
 
 if __name__ == "__main__":
