@@ -3,6 +3,9 @@
 
 <head>
     <title>{% block title %}{% endblock %} - SmartBlog</title>
+        {% block styles %}
+            {{ bootstrap.load_css() }}
+        {% endblock %}
 </head>
 
 <body>
