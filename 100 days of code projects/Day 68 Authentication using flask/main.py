@@ -27,13 +27,24 @@ class User(UserMixin, db.Model):
     def get(user_id):
         return User.query.filter_by(id=user_id).first()
 
+    @staticmethod
+    def hash_password(password):
+        return generate_password_hash(password, method='pbkdf2:sha256', salt_length=16)
+
+    @staticmethod
+    def check_password(passhash, password):
+        return check_password_hash(passhash, password)
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
 
 @app.route('/')
 def home():
-    return render_template("index.html"), 200
+    if current_user.is_authenticated:
+        return render_template("index.html", logged_in=True), 200
+    else:
+        return render_template("index.html", logged_in=False), 200
 
 
 @app.route('/register', methods=["GET","POST"])
@@ -43,7 +54,11 @@ def register():
         user_email = request.form["email"]
         user_password = request.form["password"]
 
-        new_user = User(name=user_name,email=user_email,password=user_password)
+        new_user = User(
+            name=user_name,
+            email=user_email,
+            password=User.hash_password(user_password)
+            )
         if new_user is not None:
             try:
                 db.session.add(new_user)
@@ -63,20 +78,21 @@ def register():
     else:
         return render_template("register.html")
 
-
 @app.route('/login', methods=["GET","POST"])
 def login():
     if request.method == "POST":
         login_email = request.form["email"]
         login_password = request.form["password"]
-        login_user2 =  User.query.filter_by(email=login_email).first()
-        login_user3 =  User.query.filter_by(password=login_password).first()
 
-        if login_user2 is not None and login_user3 is not None:
-            login_user(login_user2)
+        user = User.query.filter_by(email=login_email).first()
+        if user and User.check_password(user.password, login_password):
+            login_user(user)
             return redirect(url_for('secrets')), 200
         else:
-            return jsonify(error={"PasswordError":"The password or email you entered is not correct."})
+            return jsonify(error={"PasswordError":"The password you entered is not correct."})
+
+        # else:
+        #     return jsonify(error={"EmailError":"Email you entered is not correct."})
 
     else:
         return render_template("login.html"), 200
